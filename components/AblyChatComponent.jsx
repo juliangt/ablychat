@@ -35,7 +35,7 @@ const AblyChatComponent = () => {
     }
 
     const handleKeyPress = (event) => {
-        if (e.charCode !== 13 || messageTextIsEmpty) {
+        if (event.charCode !== 13 || messageTextIsEmpty) {
           return;
         }
         sendChatMessage(messageText);
@@ -44,7 +44,7 @@ const AblyChatComponent = () => {
 
     const messages = receivedMessages.map((message, index) => {
         const author = message.connectionId === ably.connection.id ? "me" : "other";
-        return <span key={index} className={styles.message} data-author={author}>{message.data}</span>;
+        return <span key={index} className={styles.message} data-author={author}>{message.data} <br /> </span>;
     });
 
     useEffect(() => {
@@ -55,8 +55,10 @@ const AblyChatComponent = () => {
         <div className={styles.chatHolder}>
           <div className={styles.chatText}>
             {messages}
-            <div ref={(element) => { messageEnd = element; }}></div> // empty element to control scroll to bottom
+            <div ref={(element) => { messageEnd = element; }}></div>
           </div>
+          <br />
+
           <form onSubmit={handleFormSubmission} className={styles.form}>
             <textarea
               ref={(element) => { inputBox = element; }}
@@ -66,6 +68,7 @@ const AblyChatComponent = () => {
               onKeyPress={handleKeyPress}
               className={styles.textarea}
             ></textarea>
+            <br />
             <button type="submit" className={styles.button} disabled={messageTextIsEmpty}>Send</button>
           </form>
         </div>
